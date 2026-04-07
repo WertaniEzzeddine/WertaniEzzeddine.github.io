@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects | Interactive Showcase with Media Indicators</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Additional inline critical style for background enhancement - integrated into style.css */
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <a href="index.html" class="back-btn">← Back Home</a>
+  <h1>✨ Interactive Project Gallery ✨</h1>
+</header>
+
+<section class="projects">
+
+<!-- ===== 1. EASYMAKER V1 (NEW) - GenX ===== -->
+<div class="project">
+  <h3>⚡ GenX | AI Content Suite</h3>
+  <div class="project-media">
+    <img src="G.png"
+         alt="GenX Dashboard Preview"
+         onclick="openGallery(['G0.png','G1.png','G2.png','G3.png','G4.png','G5.png','G6.png','G7.png','G8.png','G9.png'],0)">
+    <span class="media-badge photo-badge">📸 10 photos</span>
+  </div>
+  <!-- No video demo for this project -->
+</div>
+
+<!-- ===== 2. GenInventory ===== -->
+<div class="project">
+  <h3>📦 GenInventory | Smart Stock Manager</h3>
+  <div class="project-media">
+    <img src="f.png"
+         alt="GenInventory Interface"
+         onclick="openGallery(['f1.png','f2.png','f3.png'],0)">
+    <span class="media-badge photo-badge">📸 3 photos</span>
+  </div>
+  <div class="button-group">
+    <button class="demo-btn" onclick="openVideos(['fv.mp4'],0)">
+      ▶ Watch Demo <span class="video-count-badge">1 video</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== 3. EASYMAKER V0 (OLD) ===== -->
+<div class="project">
+  <h3>🛠️ EasyMaker (Legacy)</h3>
+  <div class="project-media">
+    <img src="E.png"
+         alt="EasyMaker Screenshot"
+         onclick="openGallery(['E1.png','E2.png','E3.png'],0)">
+    <span class="media-badge photo-badge">📸 3 photos</span>
+  </div>
+</div>
+
+<!-- ===== 4. TANITAI - AI SEO Generator ===== -->
+<div class="project">
+  <h3>🧠 TanitAI | High-Impact SEO Content</h3>
+  <div class="project-media">
+    <img src="1.png"
+         alt="TanitAI Dashboard"
+         onclick="openGallery(['1.1.png','1.2.png','1.3.png'],0)">
+    <span class="media-badge photo-badge">📸 3 photos</span>
+  </div>
+  <div class="button-group">
+    <button class="cert-btn" onclick="openGallery(['certificate1.png'],0)">
+      📜 See Certificate
+    </button>
+  </div>
+</div>
+
+<!-- ===== 5. WORKPLACE ASSISTANT ===== -->
+<div class="project">
+  <h3>🤖 Workplace Assistant</h3>
+  <div class="project-media">
+    <img src="W.png"
+         alt="Workplace Assistant UI"
+         onclick="openGallery(['W1.png','W2.png','W3.png','W4.png'],0)">
+    <span class="media-badge photo-badge">📸 4 photos</span>
+  </div>
+  <div class="button-group">
+    <button class="demo-btn" onclick="openVideos(['EV1.mp4','EV2.mp4'],0)">
+      ▶ Watch Demo <span class="video-count-badge">2 videos</span>
+    </button>
+    <button class="cert-btn" onclick="openGallery(['certificate2.png'],0)">
+      📜 Certificate
+    </button>
+  </div>
+</div>
+
+<!-- ===== 6. AIRLINK ===== -->
+<div class="project">
+  <h3>✈️ Airlink | Travel Connect</h3>
+  <div class="project-media">
+    <img src="A.png"
+         alt="Airlink Platform"
+         onclick="openGallery(['A1.png','A2.png'],0)">
+    <span class="media-badge photo-badge">📸 2 photos</span>
+  </div>
+</div>
+
+</section>
+
+<!-- IMAGE LIGHTBOX (ENHANCED) -->
+<div id="lightbox">
+  <span onclick="closeGallery()">×</span>
+  <img id="lightbox-img" alt="Gallery preview">
+  <button class="nav-btn prev-btn" onclick="change(-1)">❮</button>
+  <button class="nav-btn next-btn" onclick="change(1)">❯</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- VIDEO MODAL (ENHANCED) -->
+<div id="videoBox">
+  <span onclick="closeVideos()">×</span>
+  <video id="videoPlayer" controls></video>
+  <button class="nav-btn prev-vid" onclick="changeVideo(-1)">❮</button>
+  <button class="nav-btn next-vid" onclick="changeVideo(1)">❯</button>
+  <div class="video-counter" id="videoCounter"></div>
+</div>
+
+<script>
+// ========== IMAGE GALLERY LOGIC (with counter) ==========
+let images = [], index = 0;
+let lightboxCounter = document.getElementById('lightboxCounter');
+
+function openGallery(imgs, i) {
+  images = imgs;
+  index = i;
+  const lightbox = document.getElementById("lightbox");
+  lightbox.style.display = "flex";
+  updateLightboxCounter();
+  show();
+}
+
+function closeGallery() {
+  document.getElementById("lightbox").style.display = "none";
+}
+
+function change(n) {
+  index = (index + n + images.length) % images.length;
+  updateLightboxCounter();
+  show();
+}
+
+function show() {
+  const imgElement = document.getElementById("lightbox-img");
+  imgElement.src = images[index];
+  imgElement.alt = `Gallery image ${index+1} of ${images.length}`;
+}
+
+function updateLightboxCounter() {
+  if(lightboxCounter && images.length) {
+    lightboxCounter.textContent = `${index+1} / ${images.length}`;
+  }
+}
+
+// ========== VIDEO GALLERY LOGIC (with counter) ==========
+let videos = [], vIndex = 0;
+let videoCounter = document.getElementById('videoCounter');
+
+function openVideos(v, i) {
+  videos = v;
+  vIndex = i;
+  const videoBox = document.getElementById("videoBox");
+  videoBox.style.display = "flex";
+  updateVideoCounter();
+  showVideo();
+}
+
+function closeVideos() {
+  const videoBox = document.getElementById("videoBox");
+  videoBox.style.display = "none";
+  const player = document.getElementById("videoPlayer");
+  if(player) player.pause();
+}
+
+function changeVideo(n) {
+  vIndex = (vIndex + n + videos.length) % videos.length;
+  updateVideoCounter();
+  showVideo();
+}
+
+function showVideo() {
+  let player = document.getElementById("videoPlayer");
+  player.src = videos[vIndex];
+  player.load();
+  player.play().catch(e => console.log("Autoplay blocked, user interaction needed"));
+}
+
+function updateVideoCounter() {
+  if(videoCounter && videos.length) {
+    videoCounter.textContent = `${vIndex+1} / ${videos.length}`;
+  }
+}
+
+// Optional: close modals with ESC key
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') {
+    if(document.getElementById("lightbox").style.display === 'flex') closeGallery();
+    if(document.getElementById("videoBox").style.display === 'flex') closeVideos();
+  }
+  // left/right arrow navigation for active modal
+  if(document.getElementById("lightbox").style.display === 'flex') {
+    if(e.key === 'ArrowLeft') change(-1);
+    if(e.key === 'ArrowRight') change(1);
+  }
+  if(document.getElementById("videoBox").style.display === 'flex') {
+    if(e.key === 'ArrowLeft') changeVideo(-1);
+    if(e.key === 'ArrowRight') changeVideo(1);
+  }
+});
+</script>
+</body>
+</html>
